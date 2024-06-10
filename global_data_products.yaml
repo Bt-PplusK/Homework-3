@@ -1,0 +1,5 @@
+training_set:
+  object_type: pipeline
+  object_uuid: march_2023_yellow_taxi_trips
+  project: Homework_3
+  repo_path: /home/src/mlops/Homework_3

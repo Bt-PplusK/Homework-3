@@ -1,0 +1,40 @@
+version: '3.7'
+services:
+  mlflow:
+    build:
+      context: .
+      dockerfile: dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - "./mlflow:/home/mlflow/"
+    networks:
+      - app-network
+
+  mage:
+    image: mageai/mageai:latest
+    command: server start --host 0.0.0.0 --port 6789
+    ports:
+      - "6789:6789"
+    volumes:
+      - "./data:/home/src/data"
+    networks:
+      - app-network
+
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: mage
+    volumes:
+      - "postgres_data:/var/lib/postgresql/data"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
